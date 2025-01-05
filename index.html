@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from niggaai.fun/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 19:10:43 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIGGA AI</title>
+      <link rel="icon" type="image/x-icon" href="img/favicon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('img/background.gif');
+            background-size: cover;
+            background-position: center;
+            color: green;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: black;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10; /* Ensure the button and text are on top */
+        }
+
+        /* Breathing effect for the button */
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button.breathing {
+            animation: breathing 2s ease-in-out infinite;
+        }
+
+        /* Breathing effect animation */
+        @keyframes breathing {
+            0% {
+                transform: scale(1);
+                border-color: #4CAF50;
+            }
+            50% {
+                transform: scale(1.1);
+                border-color: #76D76D;
+            }
+            100% {
+                transform: scale(1);
+                border-color: #4CAF50;
+            }
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .loading-message {
+            white-space: pre-wrap;
+            margin-top: 20px;
+            display: none;
+            font-size: 18px;
+            overflow: hidden;
+            line-height: 1.5;
+            color: #00FF00;
+            text-shadow: 0 0 15px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
+            animation: flashyText 1s infinite alternate;
+        }
+
+        @keyframes flashyText {
+            0% {
+                text-shadow: 0 0 15px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
+            }
+            50% {
+                text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00;
+            }
+            100% {
+                text-shadow: 0 0 20px #00FF00, 0 0 25px #00FF00, 0 0 35px #00FF00;
+            }
+        }
+
+        .person-output {
+            margin-top: 30px;
+            display: none;
+        }
+
+        img {
+            max-width: 300px;
+            height: auto;
+        }
+
+        /* Falling image styles */
+        .falling-image {
+            position: absolute;
+            animation: fallAndSpin 5s infinite linear;
+            width: 50px;  /* Making the images smaller */
+            height: auto;
+        }
+
+        @keyframes fallAndSpin {
+            0% {
+                top: -200px;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 100vh;
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Falling text styles */
+        .falling-text {
+            position: absolute;
+            color: #00FF00;
+            font-size: 20px;
+            animation: textFall 5s infinite linear;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: nowrap;
+        }
+
+        @keyframes textFall {
+            0% {
+                top: -100px;
+            }
+            100% {
+                top: 100vh;
+            }
+        }
+
+        /* Random small green text at random positions */
+        .random-text {
+            position: absolute;
+            color: #00FF00;
+            font-size: 16px;
+            text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="generateBtn" class="breathing">Generate a Nigga</button>
+        <div id="loadingMessage" class="loading-message"></div>
+        <div id="personOutput" class="person-output">
+            <img id="personImage" src="#" alt="Generated Person">
+        </div>
+    </div>
+
+    <script>
+        let fallingImagesCount = 0;
+        const maxFallingImages = 10;
+        let songPlayed = false;  // Flag to check if song has been played
+
+        // Function to create falling images
+        function createFallingImages() {
+            const images = ['robber.png', 'melon.html', 'chicken.png']; // Add more images if needed
+            setInterval(function() {
+                if (fallingImagesCount < maxFallingImages) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `img/${images[Math.floor(Math.random() * images.length)]}`;
+                    imgElement.classList.add('falling-image');
+                    imgElement.style.left = `${Math.random() * 100}vw`;  // Random horizontal position
+                    document.body.appendChild(imgElement);
+                    fallingImagesCount++;
+
+                    // Remove the falling image once it falls off the screen
+                    setTimeout(function() {
+                        imgElement.remove();
+                        fallingImagesCount--;
+                    }, 5000); // Remove after 5 seconds (same as animation duration)
+                }
+            }, 1000); // Create a new image every 1 second
+        }
+
+        // Start creating falling images when the page loads
+        createFallingImages();
+
+        // Function to create falling text
+        function createFallingText() {
+            const fallingTexts = [
+                "Tyrone",
+                "Floyd",
+                "Floyd CAN breathe!!!",
+                "Martin",
+                "Big Mike"
+            ];
+
+            setInterval(function() {
+                const randomText = fallingTexts[Math.floor(Math.random() * fallingTexts.length)];
+                const textElement = document.createElement('div');
+                textElement.classList.add('falling-text');
+                textElement.innerText = randomText;
+                textElement.style.left = `${Math.random() * 100}vw`;  // Random horizontal position
+                textElement.style.animationDuration = `${Math.random() * 5 + 3}s`;  // Random speed for falling
+
+                // Append the falling text element to the body
+                document.body.appendChild(textElement);
+
+                // Remove the text once it falls off the screen
+                setTimeout(function() {
+                    textElement.remove();
+                }, 5000); // Remove after 5 seconds (same as animation duration)
+            }, 1000); // Create a new text every 1 second
+        }
+
+        // Start creating falling text when the page loads
+        createFallingText();
+
+        // Function to create random text at random positions
+        function createRandomText() {
+            const text = "ca: "; // Text to display
+            const randomTextElement = document.createElement('div');
+            randomTextElement.classList.add('random-text');
+            randomTextElement.innerText = text;
+
+            // Randomly position the text on the screen
+            const randomTop = Math.random() * 80 + '%'; // Random vertical position
+            const randomLeft = Math.random() * 100 + '%'; // Random horizontal position
+            randomTextElement.style.top = randomTop;
+            randomTextElement.style.left = randomLeft;
+
+            // Append the random text element to the body
+            document.body.appendChild(randomTextElement);
+
+            // Change the position every 3 seconds
+            setInterval(function() {
+                randomTextElement.style.top = Math.random() * 80 + '%';
+                randomTextElement.style.left = Math.random() * 100 + '%';
+            }, 3000); // Change position every 3 seconds
+        }
+
+        // Start creating random text at random positions
+        createRandomText();
+
+        // Disable the button while loading
+        let isGenerating = false;
+
+        document.getElementById("generateBtn").addEventListener("click", function() {
+            // Prevent multiple generations
+            if (isGenerating) return;
+
+            // Disable button during the generation process
+            isGenerating = true;
+            this.disabled = true;
+            this.classList.remove('breathing');  // Stop breathing effect during generation
+
+            // Play the song only if it hasn't been played before
+            if (!songPlayed) {
+                let audio = new Audio('img/song.mp3');
+                audio.loop = true;  // Play the song on repeat
+                audio.volume = 0.15;  // Set volume to 0.15
+                audio.play();
+                songPlayed = true;  // Set the flag to true so the song doesn't play again
+            }
+
+            // Play a random sound effect
+            let randomSoundIndex = Math.floor(Math.random() * 5) + 1; // Assuming you have sound files 1.mp3 to 5.mp3
+            let sound = new Audio(`img/${randomSoundIndex}.mp3`);
+            sound.play();
+
+            // Clear the previous text and show the new loading message
+            let loadingMessage = document.getElementById("loadingMessage");
+            loadingMessage.style.display = "block";
+            loadingMessage.innerHTML = ""; // Clear any previous text
+
+            // Text content to display line by line
+            let messages = [
+                "Loading your nigga...",
+                "Encrypting data...",
+                "Decrypting firewall...",
+                "Accessing the mainframe...",
+                "POOF! Generated nigga!"
+            ];
+
+            let messageIndex = 0;
+
+            function showNextMessage() {
+                if (messageIndex < messages.length) {
+                    loadingMessage.innerHTML += messages[messageIndex] + "<br>"; // Add the current message
+                    messageIndex++;
+                    setTimeout(showNextMessage, 1000); // Wait before showing the next line
+                } else {
+                    // Once all lines are shown, display the image
+                    showGeneratedImage();
+                }
+            }
+
+            // Start displaying the messages line by line
+            showNextMessage();
+
+            function showGeneratedImage() {
+                // Show a random image after the messages are finished
+                let personImage = document.getElementById("personImage");
+                let personOutput = document.getElementById("personOutput");
+                let randomIndex = Math.floor(Math.random() * 16) + 1;
+                personImage.src = `img/${randomIndex}.png`;  // Assuming your images are named img/1.png to img/20.png
+                personOutput.style.display = "block";
+
+                // Re-enable the button after the image is shown
+                setTimeout(function() {
+                    loadingMessage.style.display = "none";
+                    isGenerating = false;
+                    document.getElementById("generateBtn").disabled = false;
+                    document.getElementById("generateBtn").classList.add('breathing');  // Start breathing effect again
+                }, 2000); // Wait 2 seconds before re-enabling the button
+            }
+        });
+    </script>
+
+</body>
+
+<!-- Mirrored from niggaai.fun/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 19:10:46 GMT -->
+</html>
